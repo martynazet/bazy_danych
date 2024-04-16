@@ -29,7 +29,7 @@ def create_connection_in_memory():
 
 def execute_sql(conn, sql):
     """Execute sql
-    :param conn:Connection object
+    :param conn: Connection object
     "parm sql: a SQL script
     :return:
     """
@@ -169,7 +169,7 @@ def delete_all(conn, table):
     :param table: table name
     :return:
     """
-    sql = f'''DELETE FORM {table}'''
+    sql = f'''DELETE FROM {table}'''
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
@@ -192,7 +192,7 @@ if __name__ == '__main__':
     nazwa text(25),
     rok_prod int,
     seria text(20),
-    FOREIGN KEY(producer_id) REFERENCES Producer(id)
+    FOREIGN KEY(producer_id) REFERENCES Marka(id)
     )"""
 
     db_file = "my_database.db"
@@ -211,4 +211,12 @@ if __name__ == '__main__':
         add_model(conn, i)
 
     update(conn, "Model", 4, rok_prod=2011)
+
+    models2008 = select_task_by_year(conn, 2008)
+    for model in models2008:
+        print(model)
+    
+    select_niemcy = select_where(conn, "Marka", kraj_prod="Niemcy")
+    for i in select_niemcy:
+        print(i)
    
