@@ -70,19 +70,6 @@ def add_model(conn, model):
     return cur.lastrowid
 
 
-def select_task_by_year(conn, year):
-    """
-    Query tasks by priority
-    :param conn: the Connection object
-    :param status:
-    :return:
-    """
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM Model WHERE rok_prod=?", (year,))
-    rows = cur.fetchall()
-    return rows
-
-
 def select_all(conn, table):
     """
     Query all rows in the table
@@ -211,12 +198,11 @@ if __name__ == '__main__':
         add_model(conn, i)
 
     update(conn, "Model", 4, rok_prod=2011)
-
-    models2008 = select_task_by_year(conn, 2008)
-    for model in models2008:
-        print(model)
-    
+       
     select_niemcy = select_where(conn, "Marka", kraj_prod="Niemcy")
     for i in select_niemcy:
         print(i)
+
+    delete_where(conn, "Marka", kraj_prod="Japonia")
+    delete_all(conn, "Model")
    
